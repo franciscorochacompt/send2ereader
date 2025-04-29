@@ -6,9 +6,71 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<link rel="stylesheet" type="text/css" href="./style.css?o"/>
 	<script src="./common.js"></script>
+	<style>
+	        .modal {
+	            display: none;
+	            position: fixed;
+	            z-index: 1000;
+	            left: 0;
+	            top: 0;
+	            width: 100%;
+	            height: 100%;
+	            overflow: auto;
+	            background-color: rgb(0,0,0);
+	            background-color: rgba(0,0,0,0.4);
+	            padding-top: 60px;
+	        }
+	        .modal-content {
+	            background-color: #fefefe;
+	            margin: 5% auto;
+	            padding: 20px;
+	            border: 1px solid #888;
+	            width: 90%;
+	            max-width: 300px;
+	            text-align: center;
+                border-radius: 8px;
+	        }
+	        input[type="password"] {
+	            width: calc(100% - 20px);
+	            padding: 10px;
+	            margin: 10px 0;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+	        }
+	        button {
+	            width: 100%;
+	            padding: 10px;
+	            background-color: #5cb85c;
+	            color: white;
+	            border: none;
+	            border-radius: 5px;
+	            cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s ease;
+	        }
+	        button:hover {
+	            background-color: #4cae4c;
+	        }
+            #message {
+                margin-top: 10px;
+                font-size: 14px;
+            }
+            .wrapper {
+                display: none;
+            }
+        </style>
 </head>
 <body>
-
+<!-- Modal de Login -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <h2>LOGIN</h2>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        <button id="loginButton">Enter</button>
+        <p id="message" style="color: red;"></p>
+    </div>
+</div>
 <div class="wrapper">
 	<h1 class="center">Send to Kobo/Kindle</h1>
 	<form action="./upload" method="post" enctype="multipart/form-data" id="uploadform">
@@ -181,6 +243,52 @@ uploadform.addEventListener('submit', function (e) {
 siteurl.textContent = window.location.href
 siteurl.href = siteurl.textContent
 siteurl.target = '_self'
+
+// --- New JavaScript for Modal Login Validation (with Base64 encoding) ---
+
+var loginModal = document.getElementById('loginModal');
+var passwordInput = document.getElementById('password');
+var loginButton = document.getElementById('loginButton');
+var messageParagraph = document.getElementById('message');
+var mainContent = document.querySelector('.wrapper');
+// btoa("send2edeader")" get this from browser console
+var correctPasswordBase64 = ""c2VuZDJlcmVhZGVy"";
+
+function showModal() {
+    loginModal.style.display = 'block';
+    passwordInput.focus();
+}
+
+function hideModal() {
+    loginModal.style.display = 'none';
+}
+
+function showMainContent() {
+    mainContent.style.display = 'block';
+}
+
+loginButton.addEventListener('click', function() {
+    var enteredPassword = passwordInput.value;
+    var enteredPasswordBase64 = btoa(enteredPassword);
+    if (enteredPasswordBase64 === correctPasswordBase64) {
+        messageParagraph.textContent = '';
+        hideModal();
+        showMainContent();
+    } else {
+        messageParagraph.textContent = 'Incorrect password. Please try again.';
+        passwordInput.value = '';
+        passwordInput.focus();
+    }
+});
+
+passwordInput.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        loginButton.click();
+    }
+});
+
+window.onload = showModal;
 
 </script>
 </body>
