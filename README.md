@@ -15,7 +15,7 @@ A self hostable service for sending ebooks to a Kobo or Kindle ereader through t
 
 ### Containerized
 1. You need [Docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/) installed
-2. Clone this repo (you need Dockerfile, docker-compose.yaml and package.json in the same directory)
+2. Clone this fork repo (you need Dockerfile, docker-compose.yaml and package.json in the same directory)
 ```
 git clone https://github.com/franciscorochacompt/send2ereader.git
 ```
