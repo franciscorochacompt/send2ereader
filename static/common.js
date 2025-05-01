@@ -20,7 +20,7 @@ function xhr(method, url, cb) {
         cb(x);
     };
     x.onerror = function () {
-        log("Requisition Error: " + x.status);
+        log("Request error: " + x.status);
         cb(x);
     };
     x.open(method, url, true);
@@ -39,7 +39,7 @@ function getCookies() {
         try {
             cookies[match[1]] = JSON.parse(cookies[match[1]]);
         } catch (err) {
-            console.error("Cookie Error: " + match[1], err);
+            console.error("Error analyzing cookie: " + match[1], err);
         }
     }
     return cookies;
